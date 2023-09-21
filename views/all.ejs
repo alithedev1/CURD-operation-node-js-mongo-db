@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0b0c10; /* Dark background color */
+            margin: 0;
+            padding: 0;
+            color: #c5c6c7; /* Light text color */
+        }
+
+        header {
+            background: linear-gradient(to bottom, #1f2833, #292e32); /* Dark header background gradient */
+            color: #66fcf1; /* Header text color */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            background-color: #1f2833; /* Dark container background color */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .add-button {
+            background-color: #007bff; /* Primary button color */
+            color: #0b0c10; /* Text color on primary button */
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-button:hover {
+            background-color: #0056b3; /* Darker primary button color on hover */
+        }
+
+        tbody tr {
+            background-color: #1f2833; /* Dark row background color */
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #c5c6c7; /* Light text color */
+        }
+
+        td:last-child {
+            text-align: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .edit-button {
+            margin-bottom: 10px;
+            /* Add spacing between buttons */
+        }
+
+        .delete-button form {
+            margin-top: 10px;
+            /* Add spacing between buttons */
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h1> Students </h1>
+        <div class="header-actions">
+            <a class="btn add-button add-button-container" href="/add">Add Student</a>
+        </div>
+    </header>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Father's Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(function(user) { %>
+                    <tr>
+                        <td>
+                            <%= user.name %>
+                        </td>
+                        <td>
+                            <%= user.father %>
+                        </td>
+                        <td>
+                            <%= user.email %>
+                        </td>
+                        <td>
+                            <%= user.age %>
+                        </td>
+                        <td class="action-buttons">
+                            <div class="edit-button">
+                                <button class="btn btn-primary" onclick="editUser('<%= user.id %>')">Edit</button>
+                            </div>
+                            <div class="delete-button">
+                                <form action="/delete-conf" method="post">
+                                    <input type="hidden" id="id" name="id" value="<%= user.id %>">
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function editUser(userId) {
+            window.location.href = '/edit?userId=' + userId;
+        }
+
+        function deleteUser(userId) {
+            window.location.href = '/delete?userId=' + userId;
+        }
+    </script>
+</body>
+
+</html>
